@@ -16,5 +16,6 @@ t_vector	vec_multiply(t_vector v1, t_vector v2);
 t_vector	normalize_vector(t_vector v);
 double		dot_product(t_vector v1, t_vector v2);
 t_vector	to_vec(double n);
+t_vector	vec_scale(t_vector v, double scale);
 
 #endif /*VECTOR_H*/

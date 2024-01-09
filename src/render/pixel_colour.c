@@ -4,6 +4,7 @@ static t_colour	blend_colour(t_colour c1, t_colour c2, double t);
 static t_colour	get_object_colour(t_ray ray, t_object *objects);
 static t_colour	get_sphere_colour(t_object *closest, t_ray ray);
 static t_colour	get_plane_colour(t_object *closest, t_ray ray);
+static t_colour	get_cylinder_colour(t_object *closest, t_ray ray);
 
 /**
  * @brief Checks the colour of the ray
@@ -39,7 +40,7 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects)
 static t_colour	get_object_colour(t_ray ray, t_object *objects)
 {
 	t_object	*temp;
-	double		t;
+	double		distance;
 	t_object	*closest;
 	double		old_hit;
 
@@ -48,16 +49,21 @@ static t_colour	get_object_colour(t_ray ray, t_object *objects)
 	old_hit = 0;
 	while (temp)
 	{
-		t = hit_object(temp, ray);
-		if ((t < old_hit || old_hit == 0) && t > 0.0)
+		distance = hit_object(temp, ray);
+		if ((distance < old_hit || old_hit == 0) && distance > 0.0)
 		{
 			closest = temp;
-			old_hit = t;
+			old_hit = distance;
 		}
 		temp = temp->next;
 	}
 	if (closest != NULL && closest->sphere != NULL)
 		return (get_sphere_colour(closest, ray));
+	else if (closest != NULL && closest->cylinder != NULL)
+	{
+		// printf("Returning cylinder colour!\n");
+		return (get_cylinder_colour(closest, ray));
+	}
 	else if (closest != NULL && closest->plane != NULL)
 		return (get_plane_colour(closest, ray));
 	return ((t_colour){-1, -1, -1});
@@ -87,6 +93,23 @@ static t_colour	get_plane_colour(t_object *closest, t_ray ray)
 	plane_color.g = (int)(plane_color.g * adjusted_brightness);
 	plane_color.b = (int)(plane_color.b * adjusted_brightness);
 	return (plane_color);
+}
+
+/**
+ * @brief Calculates the colour of the plane
+ * @param closest the plane it hits
+ * @param ray the ray to check
+ * @return the plane colour
+ * @note Placeholder for now
+ */
+static t_colour	get_cylinder_colour(t_object *closest, t_ray ray)
+{
+	t_colour	cylinder_colour;
+	(void)closest;
+	(void)ray;
+
+	cylinder_colour = closest->cylinder->colour;
+	return (cylinder_colour);
 }
 
 /**

@@ -24,3 +24,13 @@ t_vector	to_vec(double n)
 {
 	return ((t_vector){n, n, n});
 }
+
+t_vector	vec_scale(t_vector v, double scale)
+{
+	t_vector	result;
+
+	result.x = v.x  * scale;
+	result.y = v.y  * scale;
+	result.z = v.z  * scale;
+	return (result);
+}

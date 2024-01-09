@@ -25,6 +25,11 @@ t_scene	parser(char **argv)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		if (ft_strncmp(line, "\n", 2) == 0)
+		{
+			free(line);
+			continue ;
+		}
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		tokens = split_line(line);

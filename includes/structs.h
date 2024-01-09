@@ -94,6 +94,7 @@ typedef struct s_object
 }	t_object;
 
 /* ----------------------------------- Ray ---------------------------------- */
+
 typedef struct s_ray
 {
 	t_vector	origin;
